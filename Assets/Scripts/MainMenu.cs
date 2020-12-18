@@ -27,7 +27,7 @@ public class MainMenu : MonoBehaviour
 
     private void Credits()
     {
-        Application.LoadLevel("Credits");
+        Application.LoadLevel("CreditsPage");
     }
 
     private void Exit()
