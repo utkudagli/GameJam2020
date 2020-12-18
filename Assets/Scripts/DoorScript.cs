@@ -5,6 +5,7 @@ public class DoorScript : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    public EDirection doorDirection = EDirection.NONE;
     bool bCanBeUsed = false;
     void Start()
     {
@@ -24,7 +25,7 @@ public class DoorScript : MonoBehaviour
         if(pcs)
         {
             bCanBeUsed = true;
-            GameData.Get().LoadNextRoom();
+            GameData.Get().LoadNextRoom(this.doorDirection);
         }
     }
 
@@ -40,6 +41,6 @@ public class DoorScript : MonoBehaviour
 
     public void Interact(PlayerCharacterScript pcs)
     {
-        GameData.Get().LoadNextRoom();
+        GameData.Get().LoadNextRoom(this.doorDirection);
     }
 }

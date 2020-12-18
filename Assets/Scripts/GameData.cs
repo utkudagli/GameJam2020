@@ -10,20 +10,39 @@ public class GameData : ScriptableObject
     public GameObject playerCharacter;
     public GameObject playerController;
 
+    public EDirection nextSpawnPointDirection = EDirection.NONE;
+
     bool bIsGameInitialized = false;
 
     public void InitializeGame(LevelScript script)
     {
-        if(bIsGameInitialized)
+        if(this.bIsGameInitialized)
         {
             return;
         }
-        bIsGameInitialized = true;
         if (playerCharacter == null)
         {
             playerCharacter = Instantiate(script.playerCharacterPrefab, new Vector2(0, 0), Quaternion.identity);
             DontDestroyOnLoad(playerCharacter);
         }
+        bIsGameInitialized = true;
+    }
+
+    public void NotifyNewSceneLoaded(LevelScript script)
+    {
+        if (this.nextSpawnPointDirection != EDirection.NONE)
+        {
+            foreach (GameObject obj in script.playerSpawnPoints)
+            {
+                PlayerSpawnPointScript pss = obj.GetComponent<PlayerSpawnPointScript>();
+                if (pss.location == this.nextSpawnPointDirection)
+                {
+                    playerCharacter.transform.position = obj.transform.position;
+                }
+
+            }
+        }
+        playerCharacter.SetActive(true);
     }
     public static GameData Get()
     {
@@ -34,9 +53,17 @@ public class GameData : ScriptableObject
         return instance;
     }
 
-    public void LoadNextRoom()
+    public void LoadNextRoom(EDirection comingFromDirection)
     {
-        playerCharacter.transform.position = new Vector2(0, 0);
+        switch(comingFromDirection)
+        {
+            case EDirection.UP: nextSpawnPointDirection = EDirection.DOWN; break;
+            case EDirection.DOWN: nextSpawnPointDirection = EDirection.UP; break;
+            case EDirection.RIGHT: nextSpawnPointDirection = EDirection.LEFT; break;
+            case EDirection.LEFT: nextSpawnPointDirection = EDirection.RIGHT; break;
+            default: nextSpawnPointDirection = EDirection.NONE; break;
+        }
+        playerCharacter.SetActive(false);
         SceneManager.LoadScene("RandomRoomScene");
     }
 }
