@@ -9,7 +9,7 @@ public class CyberstaffSphereScript : MonoBehaviour
     public float speed;
     void Start()
     {
-        
+        Object.Destroy(this.gameObject, 5);
     }
 
     public void Initialize(Vector2 direction)

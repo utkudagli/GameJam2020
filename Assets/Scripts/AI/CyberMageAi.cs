@@ -22,6 +22,8 @@ public class CyberMageAi : MonoBehaviour
     public Vector2 idleAttackRateMinMax = new Vector2(10, 90);
     public Vector2 moveAttackRateMinMax = new Vector2(10, 90);
 
+    public Transform fireOffset;
+
     public Animator animator;
 
     public GameObject cyberstaffSpherePrefab;
@@ -114,7 +116,7 @@ public class CyberMageAi : MonoBehaviour
 
     bool PostAttack()
     {
-        //this.FireStaff();
+        this.FireStaff();
         this.currentAiState = EAiState.POSTATTACK;
         this.currentAiFunction = () => { };
         this.timer = this.postAttackDuration;
@@ -232,10 +234,14 @@ public class CyberMageAi : MonoBehaviour
         {
             return;
         }
-        GameObject sphere = Instantiate(this.cyberstaffSpherePrefab, this.gameObject.transform.position, Quaternion.identity);
+        Vector2 spawnAt = this.fireOffset.position;
+        Vector2 scale = this.gameObject.transform.localScale;
+        spawnAt.x = this.movementComponent.bIsLookingRight ? spawnAt.x - 0.6f*scale.x : spawnAt.x + 0.6f * scale.x;
+
+        GameObject sphere = Instantiate(this.cyberstaffSpherePrefab, spawnAt, Quaternion.identity);
         CyberstaffSphereScript script = sphere.GetComponent<CyberstaffSphereScript>();
 
-        Vector2 lookat = (player.transform.position - this.gameObject.transform.position).normalized;
+        Vector2 lookat = (player.transform.position - new Vector3(spawnAt.x, spawnAt.y, 0)).normalized;
         script.Initialize(lookat);
     }
 }

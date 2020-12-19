@@ -68,8 +68,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 0
-  moveDurationMinMax: {x: 1, y: 2}
-  idleDurationMinMax: {x: 1, y: 2}
+  moveDurationMinMax: {x: 0.5, y: 1}
+  idleDurationMinMax: {x: 0.2, y: 0.8}
   preAttackDuration: 0.5
   postAttackDuration: 0.5
   currentAiState: 0
