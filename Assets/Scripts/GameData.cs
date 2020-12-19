@@ -30,17 +30,14 @@ public class GameData : ScriptableObject
 
     public void NotifyNewSceneLoaded(LevelScript script)
     {
-        if (this.nextSpawnPointDirection != EDirection.NONE)
+        foreach (GameObject obj in script.playerSpawnPoints)
         {
-            foreach (GameObject obj in script.playerSpawnPoints)
+            PlayerSpawnPointScript pss = obj.GetComponent<PlayerSpawnPointScript>();
+            if (pss.location == this.nextSpawnPointDirection)
             {
-                PlayerSpawnPointScript pss = obj.GetComponent<PlayerSpawnPointScript>();
-                if (pss.location == this.nextSpawnPointDirection)
-                {
-                    playerCharacter.transform.position = obj.transform.position;
-                }
-
+                playerCharacter.transform.position = obj.transform.position;
             }
+
         }
         playerCharacter.SetActive(true);
     }

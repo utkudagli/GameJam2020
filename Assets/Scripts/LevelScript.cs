@@ -48,7 +48,8 @@ public class LevelScript : MonoBehaviour
                 {
                     float offsetX = x * bounds.size.x / (numThingSpawnPoints.x);
                     float offsetY = y * bounds.size.y / (numThingSpawnPoints.y);
-                    Vector2 point = new Vector2(center.x + offsetX - extends.x, center.y + offsetY - extends.y);
+                    Vector2 point = new Vector2(center.x + offsetX - extends.x + Random.Range(-0.7f, 0.7f), center.y + offsetY - extends.y + Random.Range(-0.7f, 0.7f));
+
                     this.thingSpawnPoints.Add(point);
                 }
             }
