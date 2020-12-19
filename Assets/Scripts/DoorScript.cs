@@ -5,8 +5,7 @@ public class DoorScript : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public EDirection doorDirection = EDirection.NONE;
-    bool bCanBeUsed = false;
+    public EDirection doorDirection = EDirection.UP;
     void Start()
     {
         

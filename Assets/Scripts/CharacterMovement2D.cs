@@ -21,6 +21,7 @@ public class CharacterMovement2D : MonoBehaviour
     public void FixedUpdate()
     {
         this.transform.Translate(this.inputVec * this.MovementSpeed * Time.fixedDeltaTime);
+        this.inputVec = Vector2.zero;
     }
 
     public virtual void ApplyMovementInput(Vector2 vec)

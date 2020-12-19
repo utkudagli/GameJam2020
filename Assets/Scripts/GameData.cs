@@ -10,7 +10,7 @@ public class GameData : ScriptableObject
     public GameObject playerCharacter;
     public GameObject playerController;
 
-    public EDirection nextSpawnPointDirection = EDirection.NONE;
+    public EDirection nextSpawnPointDirection = EDirection.DOWN;
 
     bool bIsGameInitialized = false;
 
@@ -58,7 +58,7 @@ public class GameData : ScriptableObject
             case EDirection.DOWN: nextSpawnPointDirection = EDirection.UP; break;
             case EDirection.RIGHT: nextSpawnPointDirection = EDirection.LEFT; break;
             case EDirection.LEFT: nextSpawnPointDirection = EDirection.RIGHT; break;
-            default: nextSpawnPointDirection = EDirection.NONE; break;
+            default: nextSpawnPointDirection = EDirection.DOWN; break;
         }
         playerCharacter.SetActive(false);
         SceneManager.LoadScene("RandomRoomScene");
