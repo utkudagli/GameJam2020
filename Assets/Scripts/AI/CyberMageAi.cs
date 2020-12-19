@@ -22,6 +22,8 @@ public class CyberMageAi : MonoBehaviour
     public Vector2 idleAttackRateMinMax = new Vector2(10, 90);
     public Vector2 moveAttackRateMinMax = new Vector2(10, 90);
 
+    public Animator animator;
+
     public GameObject cyberstaffSpherePrefab;
 
     GameObject player;
@@ -36,6 +38,7 @@ public class CyberMageAi : MonoBehaviour
     void Start()
     {
         movementComponent = GetComponent<CharacterMovement2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -105,6 +108,7 @@ public class CyberMageAi : MonoBehaviour
         this.currentAiState = EAiState.PREATTACK;
         this.currentAiFunction = () => { };
         this.timer = this.preAttackDuration;
+        animator.SetInteger("AiState", (int)this.currentAiState);
         return true;
     }
 
@@ -122,6 +126,7 @@ public class CyberMageAi : MonoBehaviour
         this.currentAiState = EAiState.IDLE;
         this.currentAiFunction = () => { };
         this.timer = Random.Range(this.idleDurationMinMax.x, this.idleDurationMinMax.y);
+        animator.SetInteger("AiState", (int)this.currentAiState);
         return true;
     }
 
@@ -132,6 +137,7 @@ public class CyberMageAi : MonoBehaviour
         {
             this.currentAiState = EAiState.MOVE;
             this.currentAiFunction = Move;
+            animator.SetInteger("AiState", (int)this.currentAiState);
             this.timer = Random.Range(this.moveDurationMinMax.x, this.moveDurationMinMax.y);
             return true;
         }
@@ -211,6 +217,7 @@ public class CyberMageAi : MonoBehaviour
         this.currentAiState = EAiState.IDLE;
         this.currentAiFunction = () => { };
         this.timer = 0;
+        animator.SetInteger("AiState", (int)this.currentAiState);
     }
 
     void FireStaff()
