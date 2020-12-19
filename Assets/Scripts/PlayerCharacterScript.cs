@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 public class PlayerCharacterScript : MonoBehaviour
 {
+    public event Action<GameObject> OnTryInteract;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,5 +20,10 @@ public class PlayerCharacterScript : MonoBehaviour
     void AddInteractContext(MonoBehaviour other)
     {
         
+    }
+
+    public void TriggerInteract()
+    {
+        this.OnTryInteract?.Invoke(this.gameObject);
     }
 }

@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject controlledObject;
     CharacterMovement2D movement;
+    PlayerCharacterScript playerCharacterScript;
     void Start()
     {
         if (!this.controlledObject)
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         this.movement = this.controlledObject.GetComponent<CharacterMovement2D>();
+        this.playerCharacterScript = this.controlledObject.GetComponent<PlayerCharacterScript>();
     }
 
     // Update is called once per frame
@@ -26,5 +28,12 @@ public class PlayerController : MonoBehaviour
         }
         Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         this.movement.ApplyMovementInput(input);
+        if(Input.GetButtonDown("Jump"))
+        {
+            if(this.playerCharacterScript)
+            {
+                this.playerCharacterScript.TriggerInteract();
+            }
+        }
     }
 }

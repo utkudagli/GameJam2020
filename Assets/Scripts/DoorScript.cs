@@ -24,8 +24,7 @@ public class DoorScript : MonoBehaviour
         PlayerCharacterScript pcs = obj.GetComponent<PlayerCharacterScript>();
         if(pcs)
         {
-            bCanBeUsed = true;
-            GameData.Get().LoadNextRoom(this.doorDirection);
+            pcs.OnTryInteract += Interact;
         }
     }
 
@@ -35,11 +34,11 @@ public class DoorScript : MonoBehaviour
         PlayerCharacterScript pcs = obj.GetComponent<PlayerCharacterScript>();
         if (pcs)
         {
-            bCanBeUsed = false;
+            pcs.OnTryInteract -= Interact;
         }
     }
 
-    public void Interact(PlayerCharacterScript pcs)
+    public void Interact(GameObject playerCharacter)
     {
         GameData.Get().LoadNextRoom(this.doorDirection);
     }
