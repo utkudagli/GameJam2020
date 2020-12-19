@@ -14,6 +14,9 @@ public class LevelScript : MonoBehaviour
     public List<Vector2> thingSpawnPoints;
     public Vector2 numThingSpawnPoints;
     private GameData gameData;
+
+    public List<GameObject> spawnedEnemies;
+
     void Start()
     {
         this.gameData = GameData.Get();
@@ -73,5 +76,10 @@ public class LevelScript : MonoBehaviour
             Debug.DrawLine(vec, vec + Vector2.up * 0.2f, Color.green);
         }
         
+    }
+
+    void SpawnNPCs()
+    {
+
     }
 }
