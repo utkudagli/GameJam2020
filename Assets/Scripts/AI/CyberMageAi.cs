@@ -19,6 +19,12 @@ public class CyberMageAi : MonoBehaviour
     public float preAttackDuration = 1f;
     public float postAttackDuration = 1f;
     public EAiState currentAiState = EAiState.IDLE;
+    public Vector2 idleAttackRateMinMax = new Vector2(10, 90);
+    public Vector2 moveAttackRateMinMax = new Vector2(10, 90);
+
+    public GameObject cyberstaffSpherePrefab;
+
+    GameObject player;
 
     CharacterMovement2D movementComponent;
 
@@ -53,7 +59,7 @@ public class CyberMageAi : MonoBehaviour
         if (this.currentAiState == EAiState.IDLE)
         {
             float rng = Random.Range(0, 100);
-            if (rng < 10)
+            if (rng < Random.Range(idleAttackRateMinMax.x, idleAttackRateMinMax.y))
             {
                 return Attack();
             }
@@ -67,7 +73,7 @@ public class CyberMageAi : MonoBehaviour
         if(this.currentAiState == EAiState.MOVE)
         {
             float rng = Random.Range(0, 100);
-            if (rng < 10)
+            if (rng < Random.Range(moveAttackRateMinMax.x, moveAttackRateMinMax.y))
             {
                 return Attack();
             }
@@ -104,6 +110,7 @@ public class CyberMageAi : MonoBehaviour
 
     bool PostAttack()
     {
+        this.FireStaff();
         this.currentAiState = EAiState.POSTATTACK;
         this.currentAiFunction = () => { };
         this.timer = this.postAttackDuration;
@@ -138,23 +145,10 @@ public class CyberMageAi : MonoBehaviour
     {
         if(this.movementComponent)
         {
-            Vector2 direction = Vector2.up;
             Vector2 position = this.gameObject.transform.position;
-            RaycastHit2D hit;
-            switch (this.currentDirection)
-            {
-                case EDirection.UP:
-                    direction = Vector2.up; break;
-                case EDirection.DOWN:
-                    direction = Vector2.down; break;
-                case EDirection.LEFT:
-                    direction = Vector2.left; break;
-                case EDirection.RIGHT:
-                    direction = Vector2.right; break;
+            Vector2 direction = Direction.GetDirectionVector(this.currentDirection);
 
-            }
-
-            hit = Physics2D.Raycast(this.gameObject.transform.position, direction, 1f, 1 << 8);
+            RaycastHit2D hit = Physics2D.Raycast(position, direction, 1f, 1 << 8);
             if (!hit.collider)
             {
                 Debug.DrawLine(position, position + direction * 1, Color.yellow);
@@ -163,7 +157,6 @@ public class CyberMageAi : MonoBehaviour
             else
             {
                 Debug.DrawLine(position, position + direction * 1, Color.red);
-                Debug.Log("hit something");
                 ResetAiOnNextTick();
             }            
         }
@@ -220,4 +213,22 @@ public class CyberMageAi : MonoBehaviour
         this.timer = 0;
     }
 
+    void FireStaff()
+    {
+        if(this.cyberstaffSpherePrefab == null)
+        {
+            Debug.LogError("No cybersphere prefab set");
+            return;
+        }
+        GameObject player = GameData.Get().playerCharacter;
+        if(!player)
+        {
+            return;
+        }
+        GameObject sphere = Instantiate(this.cyberstaffSpherePrefab, this.gameObject.transform.position, Quaternion.identity);
+        CyberstaffSphereScript script = sphere.GetComponent<CyberstaffSphereScript>();
+
+        Vector2 lookat = (player.transform.position - this.gameObject.transform.position).normalized;
+        script.Initialize(lookat);
+    }
 }
