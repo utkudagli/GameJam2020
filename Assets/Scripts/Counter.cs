@@ -15,8 +15,8 @@ public class Counter : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Increase(int value)
     {
-        counter.text = "" + countValue;
+        counter.text = "" + value;
     }
 }
