@@ -9,11 +9,11 @@ public class CharacterMovement2D : MonoBehaviour
 
     public bool bIsLookingRight;
 
-    SpriteRenderer renderer;
+    SpriteRenderer mySpriteRenderer;
     // Start is called before the first frame update
     void Start()
     {
-        this.renderer = GetComponent<SpriteRenderer>();
+        this.mySpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -37,7 +37,7 @@ public class CharacterMovement2D : MonoBehaviour
             if (this.inputVec.x < 0)
             {
                 this.bIsLookingRight = false;
-                this.renderer.flipX = false;
+                this.mySpriteRenderer.flipX = false;
             }
         }
         else
@@ -45,7 +45,7 @@ public class CharacterMovement2D : MonoBehaviour
             if (this.inputVec.x > 0)
             {
                 this.bIsLookingRight = true;
-                this.renderer.flipX = true;
+                this.mySpriteRenderer.flipX = true;
             }
         }
 

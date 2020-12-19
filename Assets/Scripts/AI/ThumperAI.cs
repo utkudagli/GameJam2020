@@ -124,83 +124,37 @@ public class ThumperAI : MonoBehaviour
 
     bool BeginMove()
     {
-        if (FindFreeDirection())
+        this.currentAiState = EAiState.MOVE;
+        this.currentAiFunction = Move;
+        animator.SetInteger("AiState", (int)this.currentAiState);
+        this.timer = Random.Range(this.moveDurationMinMax.x, this.moveDurationMinMax.y);
+        Vector2 playerPos = GameData.Get().playerCharacter.transform.position;
+        Vector2 myPos = this.transform.position;
+
+        Vector2 difference = myPos - playerPos;
+        if(Math.Abs(difference.x) > Math.Abs(difference.y))
         {
-            this.currentAiState = EAiState.MOVE;
-            this.currentAiFunction = Move;
-            animator.SetInteger("AiState", (int)this.currentAiState);
-            this.timer = Random.Range(this.moveDurationMinMax.x, this.moveDurationMinMax.y);
-            return true;
+            //i'm more far away on the x axis, move horizontally
+
+            this.currentDirection = difference.x < 0 ? EDirection.RIGHT : EDirection.LEFT;
         }
         else
         {
-            return false;
+            //i'm more far away on the y axis, move vertically
+            this.currentDirection = difference.y < 0 ? EDirection.UP : EDirection.DOWN;
+            
         }
+        
+        return true;
     }
 
     void Move()
     {
         if (this.movementComponent)
         {
-            Vector2 position = this.gameObject.transform.position;
             Vector2 direction = Direction.GetDirectionVector(this.currentDirection);
-
-            RaycastHit2D hit = Physics2D.Raycast(position, direction, 1f, 1 << 8);
-            if (!hit.collider)
-            {
-                Debug.DrawLine(position, position + direction * 1, Color.yellow);
-                this.movementComponent.ApplyMovementInput(direction);
-            }
-            else
-            {
-                Debug.DrawLine(position, position + direction * 1, Color.red);
-                ResetAiOnNextTick();
-            }
+            this.movementComponent.ApplyMovementInput(direction);
         }
-    }
-
-    bool FindFreeDirection()
-    {
-        //try to select a random direction to move
-        EDirection rngDirection = this.currentDirection = (EDirection)Random.Range(0, 3);
-        Vector2 direction = Vector2.up;
-        switch (rngDirection)
-        {
-            case EDirection.UP:
-                direction = Vector2.up; break;
-            case EDirection.DOWN:
-                direction = Vector2.down; break;
-            case EDirection.LEFT:
-                direction = Vector2.left; break;
-            case EDirection.RIGHT:
-                direction = Vector2.right; break;
-        }
-        //check if we can actually go that way
-        RaycastHit2D hit = Physics2D.Raycast(this.gameObject.transform.position, direction, 1f, 1 << 8);
-        if (hit.collider)
-        {
-            //no wall in the way, go that way
-            this.currentDirection = rngDirection;
-            return true;
-        }
-
-        // a wall is in the way, just check directions clockwise
-        EDirection blockedDirection = rngDirection;
-        rngDirection += 1 % 4;
-        while (rngDirection != blockedDirection)
-        {
-            direction = Direction.GetDirectionVector(rngDirection);
-            hit = Physics2D.Raycast(this.gameObject.transform.position, direction, 1f, 1 << 8);
-            if (!hit.collider)
-            {
-                //no wall in the way, go that way
-                this.currentDirection = rngDirection;
-                return true;
-            }
-            rngDirection += 1 % 4;
-        }
-        //couldnt find any direction, reset ai
-        return false;
     }
 
     void ResetAiOnNextTick()

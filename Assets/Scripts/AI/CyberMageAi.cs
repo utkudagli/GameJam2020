@@ -114,7 +114,7 @@ public class CyberMageAi : MonoBehaviour
 
     bool PostAttack()
     {
-        this.FireStaff();
+        //this.FireStaff();
         this.currentAiState = EAiState.POSTATTACK;
         this.currentAiFunction = () => { };
         this.timer = this.postAttackDuration;

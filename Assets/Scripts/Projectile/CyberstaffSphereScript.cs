@@ -29,11 +29,11 @@ public class CyberstaffSphereScript : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision");
+       // Debug.Log("Collision");
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Overlap");
+        //Debug.Log("Overlap");
         GameObject obj = collision.gameObject;
         if(obj.tag == "Player")
         {
