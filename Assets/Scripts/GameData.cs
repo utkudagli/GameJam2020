@@ -20,6 +20,8 @@ public class GameData : ScriptableObject
     public EDirection nextSpawnPointDirection = EDirection.DOWN;
 
     bool bIsGameInitialized = false;
+    public TransitionScript TransitionScript;
+
 
 
     public void InitializeGame(LevelScript script)
@@ -158,5 +160,9 @@ public class GameData : ScriptableObject
     public void ShutDown()
     {
         instance = null;
+    }
+    public void Awake()
+    {
+        TransitionScript = FindObjectOfType<TransitionScript>();
     }
 }
