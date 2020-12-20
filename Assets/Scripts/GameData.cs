@@ -20,10 +20,17 @@ public class GameData : ScriptableObject
 
     public EDirection nextSpawnPointDirection = EDirection.DOWN;
 
+    int roomCounter = 0;
+    int maxRoomCounter = 2;
     bool bIsGameInitialized = false;
+
+    bool bIsLastRoom = false;
+
+    LevelScript currentLevel = null;
     
     public void InitializeGame(LevelScript script)
     {
+        this.currentLevel = script;
         if(this.bIsGameInitialized)
         {
             return;
@@ -46,7 +53,8 @@ public class GameData : ScriptableObject
 
     public void NotifyNewSceneLoaded(LevelScript script)
     {
-            //spawn player
+        //spawn player
+        this.currentLevel = script;
         foreach (GameObject obj in script.playerSpawnPoints)
         {
             PlayerSpawnPointScript pss = obj.GetComponent<PlayerSpawnPointScript>();
@@ -58,60 +66,72 @@ public class GameData : ScriptableObject
         
         //spend points to spawn enemies
 
-        while (enemyPoints > 1)
+        if(!this.bIsLastRoom)
         {
-            int alreadyExisting = script.spawnedEnemies.Count;
-            if ( alreadyExisting > 4)
+            while (enemyPoints > 1)
             {
-                if(Random.value < 0.1f - (alreadyExisting - 4) * 0.01f)
+                int alreadyExisting = script.spawnedEnemies.Count;
+                if (alreadyExisting > 4)
+                {
+                    if (Random.value < 0.1f - (alreadyExisting - 4) * 0.01f)
+                    {
+                        break;
+                    }
+                }
+                Vector2 spawnLocation = FindRandomSpawnPoint(script);
+                if (Vector2.Distance(spawnLocation, playerCharacter.transform.position) < 3)
+                {
+                    spawnLocation = -spawnLocation;
+                }
+                if (enemyPoints == 2)
+                {
+                    GameObject cyberMage = Instantiate(script.CyberMagePrefab, spawnLocation, Quaternion.identity);
+                    script.spawnedEnemies.Add(cyberMage);
+                    cyberMage.GetComponent<CharacterStats>().OnDeath += OnKill;
+                    enemyPoints -= 2;
+                    break; ;
+                }
+                //select 2 or 3
+                int spend = Random.Range(2, 4);
+                if (spend == 2)
+                {
+                    GameObject cyberMage = Instantiate(script.CyberMagePrefab, spawnLocation, Quaternion.identity);
+                    script.spawnedEnemies.Add(cyberMage);
+                    cyberMage.GetComponent<CharacterStats>().OnDeath += OnKill;
+                    enemyPoints -= 2;
+                }
+                else if (spend == 3)
+                {
+                    GameObject thumper = Instantiate(script.ThumperPrefab, spawnLocation, Quaternion.identity);
+                    script.spawnedEnemies.Add(thumper);
+                    thumper.GetComponent<CharacterStats>().OnDeath += OnKill;
+                    enemyPoints -= 3;
+                }
+            }
+
+            //TODO : spend points to spawn health crates
+
+            while (this.cratePoints > 0)
+            {
+                if (Random.value < 0.2f)
                 {
                     break;
                 }
+                Vector2 spawnLocation = FindRandomSpawnPoint(script);
+                GameObject crate = Instantiate(script.cratePrefab, spawnLocation, Quaternion.identity);
+                script.spawnedCrates.Add(crate);
+                cratePoints -= 1;
             }
-            Vector2 spawnLocation = FindRandomSpawnPoint(script);
-            if(Vector2.Distance(spawnLocation, playerCharacter.transform.position) < 3)
-            {
-                spawnLocation = -spawnLocation;
-            }
-            if (enemyPoints == 2)
-            {
-                GameObject cyberMage = Instantiate(script.CyberMagePrefab, spawnLocation, Quaternion.identity);
-                script.spawnedEnemies.Add(cyberMage);
-                enemyPoints -= 2;
-                break; ;
-            }
-            //select 2 or 3
-            int spend = Random.Range(2, 4);
-            if (spend == 2)
-            {
-                GameObject cyberMage = Instantiate(script.CyberMagePrefab, spawnLocation, Quaternion.identity);
-                script.spawnedEnemies.Add(cyberMage);
-                enemyPoints -= 2;
-            }
-            else if (spend == 3)
-            {
-                GameObject thumper = Instantiate(script.ThumperPrefab, spawnLocation, Quaternion.identity);
-                script.spawnedEnemies.Add(thumper);
-                enemyPoints -= 3;
-            }
+            cratePoints = 0;
         }
-
-        //TODO : spend points to spawn health crates
-
-        while(this.cratePoints > 0)
-        {
-            if (Random.value < 0.2f)
-            {
-                break;
-            }
-            Vector2 spawnLocation = FindRandomSpawnPoint(script);
-            GameObject crate = Instantiate(script.cratePrefab, spawnLocation, Quaternion.identity);
-            script.spawnedCrates.Add(crate);
-            cratePoints -= 1;
-        }
-        cratePoints = 0;
+        
 
        // playerCharacter.SetActive(true);
+    }
+
+    void OnKill(CharacterStats killedStats)
+    {
+        this.currentLevel.spawnedEnemies.Remove(killedStats.gameObject);
     }
     public static GameData Get()
     {
@@ -125,16 +145,37 @@ public class GameData : ScriptableObject
 
     public void LoadNextRoom(EDirection comingFromDirection)
     {
-        switch(comingFromDirection)
+        if(!this.currentLevel)
         {
-            case EDirection.UP: nextSpawnPointDirection = EDirection.DOWN; break;
-            case EDirection.DOWN: nextSpawnPointDirection = EDirection.UP; break;
-            case EDirection.RIGHT: nextSpawnPointDirection = EDirection.LEFT; break;
-            case EDirection.LEFT: nextSpawnPointDirection = EDirection.RIGHT; break;
-            default: nextSpawnPointDirection = EDirection.DOWN; break;
+            return;
         }
+
+        if(this.currentLevel.spawnedEnemies.Count > 0)
+        {
+            return;
+        }
+
         playerCharacter.GetComponent<PlayerCharacterScript>().PreRoomChange();
-        SceneManager.LoadScene("RandomRoomScene");
+        this.roomCounter++;
+        this.currentLevel = null;
+        if(this.roomCounter == this.maxRoomCounter)
+        {
+            nextSpawnPointDirection = EDirection.DOWN;
+            this.bIsLastRoom = true;
+            SceneManager.LoadScene("LastRoomScene");
+        }
+        else
+        {
+            switch (comingFromDirection)
+            {
+                case EDirection.UP: nextSpawnPointDirection = EDirection.DOWN; break;
+                case EDirection.DOWN: nextSpawnPointDirection = EDirection.UP; break;
+                case EDirection.RIGHT: nextSpawnPointDirection = EDirection.LEFT; break;
+                case EDirection.LEFT: nextSpawnPointDirection = EDirection.RIGHT; break;
+                default: nextSpawnPointDirection = EDirection.DOWN; break;
+            }
+            SceneManager.LoadScene("RandomRoomScene");
+        }
     }
 
     Vector2 FindRandomSpawnPoint(LevelScript script)
