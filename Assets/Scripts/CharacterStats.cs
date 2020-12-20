@@ -45,7 +45,6 @@ public class CharacterStats : MonoBehaviour
         this.enabled = true;
         if (this.health <= 0)
         {
-            Debug.Log($"Character {this.gameObject.name} is dead");
             this.animator.SetBool("IsAlive", false);
             this.OnDeath?.Invoke(this);
         }

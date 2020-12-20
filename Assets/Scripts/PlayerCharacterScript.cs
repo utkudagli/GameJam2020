@@ -85,18 +85,14 @@ public class PlayerCharacterScript : MonoBehaviour
         {
             if (hit.collider)
             {
-                if (hit.collider.tag == "Enemy")
+                CharacterStats enemyStats = hit.collider.gameObject.GetComponent<CharacterStats>();
+                if (enemyStats && enemyStats.IsAlive())
                 {
-                    CharacterStats enemyStats = hit.collider.gameObject.GetComponent<CharacterStats>();
-                    if (enemyStats && enemyStats.IsAlive())
-                    {
-                        Vector2 lookat = (hit.transform.position - new Vector3(origin.x, origin.y, 0)).normalized;
-                        rb.AddForce(-lookat * rb.mass * 500);
-                        hit.collider.attachedRigidbody.AddForce(lookat * rb.mass * 250);
-                        enemyStats.ReceiveDamage(1);
-                    }
+                    Vector2 lookat = (hit.transform.position - new Vector3(origin.x, origin.y, 0)).normalized;
+                    rb.AddForce(-lookat * rb.mass * 500);
+                    hit.collider.attachedRigidbody.AddForce(lookat * rb.mass * 250);
+                    enemyStats.ReceiveDamage(1);
                 }
-
             }
         }
     }
@@ -137,5 +133,15 @@ public class PlayerCharacterScript : MonoBehaviour
             lastPoint = thisPoint;
             angle += 360f / segments;
         }
+    }
+
+    public void OnFootstepAnimNotify()
+    {
+
+    }
+
+    public void OnDeathAnimNotify()
+    {
+
     }
 }

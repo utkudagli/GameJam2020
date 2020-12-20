@@ -262,4 +262,19 @@ public class CyberMageAi : MonoBehaviour
         Vector2 lookat = (player.transform.position - new Vector3(spawnAt.x, spawnAt.y, 0)).normalized;
         script.Initialize(lookat);
     }
+
+    public void OnFootstepAnimNotify()
+    {
+
+    }
+
+    public void OnDeathAnimNotify()
+    {
+
+    }
+
+    void OnAttackAnimNotify()
+    {
+
+    }
 }

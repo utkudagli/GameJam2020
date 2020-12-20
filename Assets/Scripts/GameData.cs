@@ -77,6 +77,8 @@ public class GameData : ScriptableObject
             }
         }
 
+        //TODO : spend points to spawn health crates
+
         playerCharacter.SetActive(true);
     }
     public static GameData Get()

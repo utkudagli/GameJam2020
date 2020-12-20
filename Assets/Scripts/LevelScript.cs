@@ -17,11 +17,12 @@ public class LevelScript : MonoBehaviour
 
     public GameObject ThumperPrefab;
     public GameObject CyberMagePrefab;
-
+    public GameObject cratePrefab;
 
     public static int pointsToRobotTable;
 
     public List<GameObject> spawnedEnemies;
+    public List<GameObject> spawnedCrates;
 
     void Start()
     {

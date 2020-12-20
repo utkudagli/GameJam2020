@@ -150,7 +150,7 @@ public class ThumperAI : MonoBehaviour
         Vector2 myPos = this.transform.position;
 
         Vector2 difference = myPos - playerPos;
-        if(Math.Abs(difference.x) > Math.Abs(difference.y))
+        if (Math.Abs(difference.x) > Math.Abs(difference.y))
         {
             //i'm more far away on the x axis, move horizontally
 
@@ -160,9 +160,9 @@ public class ThumperAI : MonoBehaviour
         {
             //i'm more far away on the y axis, move vertically
             this.currentDirection = difference.y < 0 ? EDirection.UP : EDirection.DOWN;
-            
+
         }
-        
+
         return true;
     }
 
@@ -196,5 +196,20 @@ public class ThumperAI : MonoBehaviour
     {
         //Debug.Log("Boo! I'm attacking");
         //this.thumpSound.Play();
+    }
+
+    public void OnFootstepAnimNotify()
+    {
+
+    }
+
+    public void OnDeathAnimNotify()
+    {
+
+    }
+
+    void OnAttackAnimNotify()
+    {
+
     }
 }
