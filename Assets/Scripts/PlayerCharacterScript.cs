@@ -39,21 +39,25 @@ public class PlayerCharacterScript : MonoBehaviour
         lastAttackLocation = origin + offset;
 
         bDidAttackLastFrame = true;
-        RaycastHit2D hit = Physics2D.CircleCast(lastAttackLocation, 1, offset.normalized, 0.5f, 1 << 10);
-        if (hit.collider)
-        {
-            if(hit.collider.tag == "Enemy")
-            {
-                CharacterStats enemyStats = hit.collider.gameObject.GetComponent<CharacterStats>();
-                if (enemyStats && enemyStats.IsAlive())
-                {
-                    Vector2 lookat = (hit.transform.position - new Vector3(origin.x, origin.y, 0)).normalized;
-                    rb.AddForce(-lookat * rb.mass * 500);
-                    hit.collider.attachedRigidbody.AddForce(lookat * rb.mass * 250);
-                    enemyStats.ReceiveDamage(1);
-                }
-            }
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(lastAttackLocation, 1, offset.normalized, 0.5f, 1 << 10);
 
+        foreach(RaycastHit2D hit in hits)
+        {
+            if (hit.collider)
+            {
+                if (hit.collider.tag == "Enemy")
+                {
+                    CharacterStats enemyStats = hit.collider.gameObject.GetComponent<CharacterStats>();
+                    if (enemyStats && enemyStats.IsAlive())
+                    {
+                        Vector2 lookat = (hit.transform.position - new Vector3(origin.x, origin.y, 0)).normalized;
+                        rb.AddForce(-lookat * rb.mass * 500);
+                        hit.collider.attachedRigidbody.AddForce(lookat * rb.mass * 250);
+                        enemyStats.ReceiveDamage(1);
+                    }
+                }
+
+            }
         }
     }
 
