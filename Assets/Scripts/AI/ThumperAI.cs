@@ -205,6 +205,7 @@ public class ThumperAI : MonoBehaviour
 
     void OnAttackAnimNotify()
     {
+        thumpSound.Play();
         Debug.Log("Thumper attack anim notify");
         Vector2 mylocation = this.transform.position;
         float radius = this.myCollider.bounds.extents.x * 2;
