@@ -14,22 +14,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RandomRoomScene.unity
     guid: adf1c02697cfd9e4bb3f4f24b266e634
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Room 1.unity
     guid: a4bdc7af3868f4731adfcaac953e5d5a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Room 2.unity
     guid: bffdcb4ffb02d427fa662be36767ff68
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Room 3.unity
     guid: 01db341da37274d628f027c149354802
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Room 4.unity
     guid: e4544d65b7ebf4228b87007200050aa7
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Text Box.unity
     guid: 3b670382a314c57419734a717417cc07
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/CreditsPage.unity
     guid: 6e6b0516b46baca4a901672be169dbfc
   - enabled: 1
