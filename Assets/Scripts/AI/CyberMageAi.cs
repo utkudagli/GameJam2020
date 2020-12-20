@@ -173,7 +173,7 @@ public class CyberMageAi : MonoBehaviour
     bool FindFreeDirection()
     {
         //try to select a random direction to move
-        EDirection rngDirection = this.currentDirection = (EDirection)Random.Range(0, 3);
+        EDirection rngDirection = this.currentDirection = (EDirection)Random.Range(0, 4);
         Vector2 direction = Vector2.up;
         switch (rngDirection)
         {
@@ -185,10 +185,13 @@ public class CyberMageAi : MonoBehaviour
                 direction = Vector2.left; break;
             case EDirection.RIGHT:
                 direction = Vector2.right; break;
+            default: 
+                Debug.LogError("Shouldn't be possible"); 
+            break;
         }
         //check if we can actually go that way
         RaycastHit2D hit = Physics2D.Raycast(this.gameObject.transform.position, direction, 1f, 1 << 8);
-        if (hit.collider)
+        if (!hit.collider)
         {
             //no wall in the way, go that way
             this.currentDirection = rngDirection;
@@ -197,8 +200,8 @@ public class CyberMageAi : MonoBehaviour
 
         // a wall is in the way, just check directions clockwise
         EDirection blockedDirection = rngDirection;
-        rngDirection += 1 % 4;
-        while(rngDirection != blockedDirection)
+        rngDirection = (EDirection)(((int)rngDirection + 1) % 4);
+        while (rngDirection != blockedDirection)
         {
             direction = Direction.GetDirectionVector(rngDirection);
             hit = Physics2D.Raycast(this.gameObject.transform.position, direction, 1f, 1 << 8);
@@ -208,7 +211,7 @@ public class CyberMageAi : MonoBehaviour
                 this.currentDirection = rngDirection;
                 return true;
             }
-            rngDirection += 1 % 4;
+            rngDirection = (EDirection)(((int)rngDirection+1) % 4);
         }
         //couldnt find any direction, reset ai
         return false;

@@ -35,5 +35,13 @@ public class PlayerController : MonoBehaviour
                 this.playerCharacterScript.TriggerInteract();
             }
         }
+
+        if(Input.GetButtonDown("Fire1"))
+        {
+            if(this.playerCharacterScript)
+            {
+                this.playerCharacterScript.Attack();
+            }
+        }
     }
 }

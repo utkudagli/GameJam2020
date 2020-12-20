@@ -5,11 +5,12 @@ using UnityEngine;
 public class CharacterMovement2D : MonoBehaviour
 {
     public Vector2 inputVec;
+    public Vector2 lastActiveInputVec;
     public float MovementSpeed = 50;
 
     public bool bIsLookingRight;
 
-    SpriteRenderer mySpriteRenderer;
+    public SpriteRenderer mySpriteRenderer;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,13 +32,12 @@ public class CharacterMovement2D : MonoBehaviour
     public virtual void ApplyMovementInput(Vector2 vec)
     {
         this.inputVec = vec;
-
+        this.lastActiveInputVec = vec.normalized;
         if (this.bIsLookingRight)
         {
             if (this.inputVec.x < 0)
             {
                 this.bIsLookingRight = false;
-                this.mySpriteRenderer.flipX = false;
             }
         }
         else
@@ -45,9 +45,12 @@ public class CharacterMovement2D : MonoBehaviour
             if (this.inputVec.x > 0)
             {
                 this.bIsLookingRight = true;
-                this.mySpriteRenderer.flipX = true;
+                
             }
         }
-
+        if(this.mySpriteRenderer != null)
+        {
+            this.mySpriteRenderer.flipX = this.bIsLookingRight;
+        }
     }
 }

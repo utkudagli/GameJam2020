@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2804947529714638109}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FireOffset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,9 +45,9 @@ GameObject:
   - component: {fileID: 476018886}
   - component: {fileID: 476018887}
   - component: {fileID: -7260719356373313512}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CyberMage
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -202,8 +202,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputVec: {x: 0, y: 0}
+  lastActiveInputVec: {x: 0, y: 0}
   MovementSpeed: 1.5
   bIsLookingRight: 0
+  mySpriteRenderer: {fileID: 0}
 --- !u!95 &-7260719356373313512
 Animator:
   serializedVersion: 3

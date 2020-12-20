@@ -15,6 +15,10 @@ public class ThumperAI : MonoBehaviour
     public Vector2 idleAttackRateMinMax = new Vector2(10, 90);
     public Vector2 moveAttackRateMinMax = new Vector2(10, 90);
 
+    public AudioSource thumpSound;
+    public AudioSource moveSound;
+
+
     public Animator animator;
 
     GameObject player;
@@ -172,5 +176,11 @@ public class ThumperAI : MonoBehaviour
         {
             return;
         }
+    }
+
+    void AttackEvent()
+    {
+        //Debug.Log("Boo! I'm attacking");
+        //this.thumpSound.Play();
     }
 }

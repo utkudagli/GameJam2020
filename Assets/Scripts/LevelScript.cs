@@ -13,7 +13,13 @@ public class LevelScript : MonoBehaviour
     public List<GameObject> playerSpawnPoints;
     public List<Vector2> thingSpawnPoints;
     public Vector2 numThingSpawnPoints;
-    private GameData gameData;
+    public GameData gameData;
+
+    public GameObject ThumperPrefab;
+    public GameObject CyberMagePrefab;
+
+
+    public static int pointsToRobotTable;
 
     public List<GameObject> spawnedEnemies;
 
@@ -70,6 +76,7 @@ public class LevelScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameData.Get().Update();
         foreach(Vector2 vec in this.thingSpawnPoints)
         {
 
@@ -78,8 +85,8 @@ public class LevelScript : MonoBehaviour
         
     }
 
-    void SpawnNPCs()
+    void OnApplicationQuit()
     {
-
+        GameData.Get().ShutDown();
     }
 }
