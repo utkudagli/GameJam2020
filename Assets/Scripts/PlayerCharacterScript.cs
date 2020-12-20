@@ -21,6 +21,7 @@ public class PlayerCharacterScript : MonoBehaviour
     private CharacterStats myStats;
     public Animator myAnimator;
     public EPlayerState myPlayerState = EPlayerState.IDLE;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,7 +62,14 @@ public class PlayerCharacterScript : MonoBehaviour
 
     public void Attack()
     {
-        if(!this.attackHitboxTransform)
+        Debug.Log("trying to play attacking animation");
+        this.myPlayerState = EPlayerState.ATTACKING;
+        this.myAnimator.Play("AN_PlayerAttack");
+    }
+
+    void OnAttackAnimNotify()
+    {
+        if (!this.attackHitboxTransform)
         {
             return;
         }
@@ -73,7 +81,7 @@ public class PlayerCharacterScript : MonoBehaviour
         bDidAttackLastFrame = true;
         RaycastHit2D[] hits = Physics2D.CircleCastAll(lastAttackLocation, 1, offset.normalized, 0.5f, 1 << 10);
 
-        foreach(RaycastHit2D hit in hits)
+        foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider)
             {
@@ -91,6 +99,12 @@ public class PlayerCharacterScript : MonoBehaviour
 
             }
         }
+    }
+
+    void OnPostAttackAnimNotify()
+    {
+        this.myPlayerState = EPlayerState.IDLE;
+        //this.myAnimator.SetInteger("PlayerState", (int)EPlayerState.IDLE);
     }
 
     private void OnDrawGizmos()

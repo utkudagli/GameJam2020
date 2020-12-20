@@ -135,6 +135,7 @@ MonoBehaviour:
   attackHitboxTransform: {fileID: 4038971245874987936}
   myAnimator: {fileID: -78958837256535747}
   myPlayerState: 0
+  attackAnimation: {fileID: 0}
 --- !u!114 &3726902845487669284
 MonoBehaviour:
   m_ObjectHideFlags: 0

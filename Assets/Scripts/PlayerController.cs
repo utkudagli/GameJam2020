@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+        if(this.playerCharacterScript.myPlayerState == EPlayerState.DEAD)
+        {
+            return;
+        }
         Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         this.movement.ApplyMovementInput(input);
         if(Input.GetButtonDown("Jump"))
