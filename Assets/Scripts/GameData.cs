@@ -35,34 +35,7 @@ public class GameData : ScriptableObject
 
     public void NotifyNewSceneLoaded(LevelScript script)
     {
-        //spend points to spawn enemies
-
-        while(points > 1)
-        {
-            Vector2 spawnLocation = FindRandomSpawnPoint(script);
-            if(points == 2)
-            {
-                GameObject cyberMage = Instantiate(script.CyberMagePrefab, spawnLocation, Quaternion.identity);
-                script.spawnedEnemies.Add(cyberMage);
-                points -= 2;
-                break; ;
-            }
-            //select 2 or 3
-            int spend = Random.Range(2, 4);
-            if(spend == 2)
-            {
-                GameObject cyberMage = Instantiate(script.CyberMagePrefab, spawnLocation, Quaternion.identity);
-                script.spawnedEnemies.Add(cyberMage);
-                points -= 2;
-            }
-            else if(spend == 3)
-            {
-                GameObject thumper = Instantiate(script.ThumperPrefab, spawnLocation, Quaternion.identity);
-                script.spawnedEnemies.Add(thumper);
-                points -= 3;
-            }
-        }
-        //spawn player
+            //spawn player
         foreach (GameObject obj in script.playerSpawnPoints)
         {
             PlayerSpawnPointScript pss = obj.GetComponent<PlayerSpawnPointScript>();
@@ -71,6 +44,39 @@ public class GameData : ScriptableObject
                 playerCharacter.transform.position = obj.transform.position;
             }
         }
+        
+        //spend points to spawn enemies
+
+        while (points > 1)
+        {
+            Vector2 spawnLocation = FindRandomSpawnPoint(script);
+            if(Vector2.Distance(spawnLocation, playerCharacter.transform.position) < 3)
+            {
+                spawnLocation = -spawnLocation;
+            }
+            if (points == 2)
+            {
+                GameObject cyberMage = Instantiate(script.CyberMagePrefab, spawnLocation, Quaternion.identity);
+                script.spawnedEnemies.Add(cyberMage);
+                points -= 2;
+                break; ;
+            }
+            //select 2 or 3
+            int spend = Random.Range(2, 4);
+            if (spend == 2)
+            {
+                GameObject cyberMage = Instantiate(script.CyberMagePrefab, spawnLocation, Quaternion.identity);
+                script.spawnedEnemies.Add(cyberMage);
+                points -= 2;
+            }
+            else if (spend == 3)
+            {
+                GameObject thumper = Instantiate(script.ThumperPrefab, spawnLocation, Quaternion.identity);
+                script.spawnedEnemies.Add(thumper);
+                points -= 3;
+            }
+        }
+
         playerCharacter.SetActive(true);
     }
     public static GameData Get()
