@@ -151,7 +151,7 @@ public class GameData : ScriptableObject
         if (this.cratePointGainTimer < 0)
         {
             cratePoints = cratePoints < 2 ? cratePoints + 1 : cratePoints;
-            this.cratePointGainTimer = Mathf.Sqrt(cratePoints));
+            this.cratePointGainTimer = Mathf.Sqrt(cratePoints);
         }
     }
 
