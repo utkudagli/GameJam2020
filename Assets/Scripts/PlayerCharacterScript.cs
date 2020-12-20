@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+
+public enum EPlayerState
+{
+    IDLE,
+    MOVING,
+    ATTACKING,
+    DEAD
+}
 public class PlayerCharacterScript : MonoBehaviour
 {
     public event Action<GameObject> OnTryInteract;
@@ -10,15 +18,39 @@ public class PlayerCharacterScript : MonoBehaviour
     public Transform attackHitboxTransform;
     private CharacterMovement2D movementComponent;
     private Rigidbody2D rb;
+    private CharacterStats myStats;
+    public Animator myAnimator;
+    public EPlayerState myPlayerState = EPlayerState.IDLE;
     // Start is called before the first frame update
     void Start()
     {
         movementComponent = gameObject.GetComponent<CharacterMovement2D>();
         rb = gameObject.GetComponent<Rigidbody2D>();
+        myStats = GetComponent<CharacterStats>();
+        myStats.OnDeath += OnDeath;
+    }
+
+    public void OnDeath(CharacterStats myStats)
+    {
+        myStats.OnDeath -= OnDeath;
+        this.myPlayerState = EPlayerState.DEAD;
+        this.myAnimator.SetBool("IsAlive", false);
+        this.enabled = false;
     }
 
     // Update is called once per frame
 
+    public void Update()
+    {
+        if(this.movementComponent.lastActiveInputVec != Vector2.zero)
+        {
+            this.myAnimator.SetInteger("PlayerState",(int)EPlayerState.MOVING);
+        }
+        else
+        {
+            this.myAnimator.SetInteger("PlayerState", (int)EPlayerState.IDLE);
+        }
+    }
     public void TriggerInteract()
     {
         this.OnTryInteract?.Invoke(this.gameObject);

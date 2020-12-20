@@ -9,6 +9,7 @@ public class CharacterMovement2D : MonoBehaviour
     public float MovementSpeed = 50;
 
     public bool bIsLookingRight;
+    public bool bIsLookingRightByDefault = false;
 
     public SpriteRenderer mySpriteRenderer;
     // Start is called before the first frame update
@@ -50,7 +51,8 @@ public class CharacterMovement2D : MonoBehaviour
         }
         if(this.mySpriteRenderer != null)
         {
-            this.mySpriteRenderer.flipX = this.bIsLookingRight;
+            bool bShouldFlip = this.bIsLookingRightByDefault ^ this.bIsLookingRight;
+            this.mySpriteRenderer.flipX = bShouldFlip;
         }
     }
 }
