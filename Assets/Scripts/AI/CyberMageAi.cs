@@ -23,6 +23,7 @@ public class CyberMageAi : MonoBehaviour
     public Vector2 idleAttackRateMinMax = new Vector2(10, 90);
     public Vector2 moveAttackRateMinMax = new Vector2(10, 90);
     public AudioSource WalkingSound;
+    public AudioSource deathSound;
 
     public Transform fireOffset;
 
@@ -271,6 +272,7 @@ public class CyberMageAi : MonoBehaviour
 
     public void OnDeathAnimNotify()
     {
+        deathSound.Play();
 
     }
 
