@@ -22,13 +22,8 @@ public class CyberstaffSphereScript : MonoBehaviour
         this.transform.Translate(this.direction * this.speed * Time.fixedDeltaTime);
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
-       // Debug.Log("Collision");
-    }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log("Overlap");
         GameObject obj = collision.gameObject;
         if(obj.tag == "Player")
         {

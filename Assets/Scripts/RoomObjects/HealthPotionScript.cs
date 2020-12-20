@@ -27,7 +27,6 @@ public class HealthPotionScript : MonoBehaviour
 
     public void OnPlayerInteract(GameObject obj)
     {
-        Debug.Log("Potion interact");
         PlayerCharacterScript pss = obj.GetComponent<PlayerCharacterScript>();
         pss.OnTryInteract -= OnPlayerInteract;
 

@@ -194,8 +194,7 @@ public class ThumperAI : MonoBehaviour
 
     void AttackEvent()
     {
-        //Debug.Log("Boo! I'm attacking");
-        //this.thumpSound.Play();
+
     }
 
     public void OnFootstepAnimNotify()

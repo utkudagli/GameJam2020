@@ -68,7 +68,6 @@ public class PlayerCharacterScript : MonoBehaviour
 
     public void Attack()
     {
-        Debug.Log("trying to play attacking animation");
         this.myPlayerState = EPlayerState.ATTACKING;
         this.myAnimator.Play("AN_PlayerAttack");
     }
