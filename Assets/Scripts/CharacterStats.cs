@@ -51,7 +51,7 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    bool IsAlive()
+    public bool IsAlive()
     {
         return this.health > 0;
     }

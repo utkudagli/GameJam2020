@@ -44,13 +44,13 @@ public class PlayerCharacterScript : MonoBehaviour
         {
             if(hit.collider.tag == "Enemy")
             {
-                Vector2 lookat = (hit.transform.position - new Vector3(origin.x, origin.y, 0)).normalized;
-                rb.AddForce(-lookat * rb.mass * 500);
-                hit.collider.attachedRigidbody.AddForce(lookat * rb.mass * 250);
                 CharacterStats enemyStats = hit.collider.gameObject.GetComponent<CharacterStats>();
-                if(enemyStats)
+                if (enemyStats && enemyStats.IsAlive())
                 {
-                      enemyStats.ReceiveDamage(1);
+                    Vector2 lookat = (hit.transform.position - new Vector3(origin.x, origin.y, 0)).normalized;
+                    rb.AddForce(-lookat * rb.mass * 500);
+                    hit.collider.attachedRigidbody.AddForce(lookat * rb.mass * 250);
+                    enemyStats.ReceiveDamage(1);
                 }
             }
 
