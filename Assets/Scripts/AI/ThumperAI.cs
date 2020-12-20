@@ -17,6 +17,7 @@ public class ThumperAI : MonoBehaviour
 
     public AudioSource thumpSound;
     public AudioSource moveSound;
+    public AudioSource deathSound;
 
     private Collider2D myCollider;
     public Animator animator;
@@ -200,6 +201,7 @@ public class ThumperAI : MonoBehaviour
 
     public void OnDeathAnimNotify()
     {
+        deathSound.Play();
 
     }
 
