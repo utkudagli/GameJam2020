@@ -21,10 +21,7 @@ public class GameData : ScriptableObject
     public EDirection nextSpawnPointDirection = EDirection.DOWN;
 
     bool bIsGameInitialized = false;
-    public TransitionScript TransitionScript;
-
-
-
+    
     public void InitializeGame(LevelScript script)
     {
         if(this.bIsGameInitialized)
@@ -41,6 +38,9 @@ public class GameData : ScriptableObject
             playerCharacter = Instantiate(script.playerCharacterPrefab, new Vector2(0, 0), Quaternion.identity);
             DontDestroyOnLoad(playerCharacter);
         }
+        GameHudScript hudScript = this.hud.GetComponent<GameHudScript>();
+        hudScript.Initialize();
+       
         bIsGameInitialized = true;
     }
 
@@ -171,6 +171,6 @@ public class GameData : ScriptableObject
     }
     public void Awake()
     {
-        TransitionScript = FindObjectOfType<TransitionScript>();
+       
     }
 }

@@ -11,10 +11,16 @@ public class GameHudScript : MonoBehaviour
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
+    public void Initialize()
     {
-        
+        GameData data = GameData.Get();
+        GameObject playerObj = data.playerCharacter;
+
+        CharacterStats playerStats = playerObj.GetComponent<CharacterStats>();
+        playerStats.OnHealthChanged += OnHealthChanged;
+    }
+    public void OnHealthChanged(int currentHealth, int maxHealth)
+    {
+        this.healthBarScript.SetSize((float)currentHealth / (float)maxHealth);
     }
 }

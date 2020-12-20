@@ -50,7 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe45985b3c128b409076badc2b695f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  health: 4
+  maxHealth: 4
   animator: {fileID: 5535852428401206874}
   spriteRenderer: {fileID: 5535852428401206872}
 --- !u!95 &5535852428401206874
