@@ -52,6 +52,14 @@ public class GameData : ScriptableObject
 
         while (enemyPoints > 1)
         {
+            int alreadyExisting = script.spawnedEnemies.Count;
+            if ( alreadyExisting > 4)
+            {
+                if(Random.value < 0.1f - (alreadyExisting - 4) * 0.01f)
+                {
+                    break;
+                }
+            }
             Vector2 spawnLocation = FindRandomSpawnPoint(script);
             if(Vector2.Distance(spawnLocation, playerCharacter.transform.position) < 3)
             {
@@ -84,7 +92,7 @@ public class GameData : ScriptableObject
 
         while(this.cratePoints > 0)
         {
-            if(Random.Range(0,100) < 10)
+            if (Random.value < 0.2f)
             {
                 break;
             }
@@ -101,7 +109,6 @@ public class GameData : ScriptableObject
     {
         if (instance == null)
         {
-            Debug.Log("Creating new gamedata instance");
             instance = ScriptableObject.CreateInstance<GameData>();
             DontDestroyOnLoad(instance);
         }
@@ -144,13 +151,12 @@ public class GameData : ScriptableObject
         if (this.cratePointGainTimer < 0)
         {
             cratePoints = cratePoints < 2 ? cratePoints + 1 : cratePoints;
-            this.cratePointGainTimer = Mathf.Sqrt(enemyPoints);
+            this.cratePointGainTimer = Mathf.Sqrt(cratePoints);
         }
     }
 
     public void ShutDown()
     {
-        Debug.Log("Shutting down gamedata");
         instance = null;
     }
 }
