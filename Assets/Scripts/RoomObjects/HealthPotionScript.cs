@@ -8,20 +8,20 @@ public class HealthPotionScript : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject obj = collision.gameObject;
-        if (obj.tag == "Player")
+        PlayerCharacterScript pcs = obj.GetComponent<PlayerCharacterScript>();
+        if (pcs)
         {
-            PlayerCharacterScript pss = obj.GetComponent<PlayerCharacterScript>();
-            pss.OnTryInteract += OnPlayerInteract;
+            pcs.OnTryInteract += OnPlayerInteract;
         }
     }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
         GameObject obj = collision.gameObject;
-        if (obj.tag == "Player")
+        PlayerCharacterScript pcs = obj.GetComponent<PlayerCharacterScript>();
+        if (pcs)
         {
-            PlayerCharacterScript pss = obj.GetComponent<PlayerCharacterScript>();
-            pss.OnTryInteract -= OnPlayerInteract;
+            pcs.OnTryInteract -= OnPlayerInteract;
         }
     }
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1326803949641750548}
   - component: {fileID: 6287551901011456037}
   - component: {fileID: 4765470683278574078}
+  - component: {fileID: 7467983334388038130}
   m_Layer: 12
   m_Name: HealthPotion
   m_TagString: Untagged
@@ -108,3 +109,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 18.75, y: 18.75}
   m_EdgeRadius: 0
+--- !u!114 &7467983334388038130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3998934023392605066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18d1f3dbe9b14243a33401f05049d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -265,7 +265,6 @@ public class CyberMageAi : MonoBehaviour
 
     public void OnFootstepAnimNotify()
     {
-
     }
 
     public void OnDeathAnimNotify()

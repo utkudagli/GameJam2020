@@ -50,8 +50,12 @@ MonoBehaviour:
   playerSpawnPoints: []
   thingSpawnPoints: []
   numThingSpawnPoints: {x: 0, y: 0}
+  gameData: {fileID: 0}
   ThumperPrefab: {fileID: 5535852428401206870, guid: 636fa3b8372f10a48ab2953f9087b46a,
     type: 3}
   CyberMagePrefab: {fileID: 8322364721404628286, guid: 7eaa532d6bba47a40ae48a2387805806,
     type: 3}
+  cratePrefab: {fileID: 7637606566305732392, guid: 090994bc590ff5440bb50f81a6dd6888,
+    type: 3}
   spawnedEnemies: []
+  spawnedCrates: []

@@ -8,8 +8,11 @@ public class GameData : ScriptableObject
     static private GameData instance = null;
 
     public float gameTimer;
-    public float pointTimer;
-    public int points;
+    public float enemyPointGainTimer;
+    public int enemyPoints;
+
+    public float cratePointGainTimer;
+    public int cratePoints;
 
     public GameObject playerCharacter;
     public GameObject playerController;
@@ -47,18 +50,18 @@ public class GameData : ScriptableObject
         
         //spend points to spawn enemies
 
-        while (points > 1)
+        while (enemyPoints > 1)
         {
             Vector2 spawnLocation = FindRandomSpawnPoint(script);
             if(Vector2.Distance(spawnLocation, playerCharacter.transform.position) < 3)
             {
                 spawnLocation = -spawnLocation;
             }
-            if (points == 2)
+            if (enemyPoints == 2)
             {
                 GameObject cyberMage = Instantiate(script.CyberMagePrefab, spawnLocation, Quaternion.identity);
                 script.spawnedEnemies.Add(cyberMage);
-                points -= 2;
+                enemyPoints -= 2;
                 break; ;
             }
             //select 2 or 3
@@ -67,17 +70,30 @@ public class GameData : ScriptableObject
             {
                 GameObject cyberMage = Instantiate(script.CyberMagePrefab, spawnLocation, Quaternion.identity);
                 script.spawnedEnemies.Add(cyberMage);
-                points -= 2;
+                enemyPoints -= 2;
             }
             else if (spend == 3)
             {
                 GameObject thumper = Instantiate(script.ThumperPrefab, spawnLocation, Quaternion.identity);
                 script.spawnedEnemies.Add(thumper);
-                points -= 3;
+                enemyPoints -= 3;
             }
         }
 
         //TODO : spend points to spawn health crates
+
+        while(this.cratePoints > 0)
+        {
+            if(Random.Range(0,100) < 10)
+            {
+                break;
+            }
+            Vector2 spawnLocation = FindRandomSpawnPoint(script);
+            GameObject crate = Instantiate(script.cratePrefab, spawnLocation, Quaternion.identity);
+            script.spawnedCrates.Add(crate);
+            cratePoints -= 1;
+        }
+        cratePoints = 0;
 
         playerCharacter.SetActive(true);
     }
@@ -117,12 +133,18 @@ public class GameData : ScriptableObject
     public void Update()
     {
         this.gameTimer += Time.deltaTime;
-        this.pointTimer -= Time.deltaTime;
-        if (this.pointTimer < 0)
+        this.enemyPointGainTimer -= Time.deltaTime;
+        if (this.enemyPointGainTimer < 0)
         {
             //cap points at 50 for now
-            points = points < 50 ? points + 1 : points;
-            this.pointTimer = Mathf.Sqrt(points);
+            enemyPoints = enemyPoints < 50 ? enemyPoints + 1 : enemyPoints;
+            this.enemyPointGainTimer = Mathf.Sqrt(enemyPoints);
+        }
+        this.cratePointGainTimer -= Time.deltaTime;
+        if (this.cratePointGainTimer < 0)
+        {
+            cratePoints = cratePoints < 2 ? cratePoints + 1 : cratePoints;
+            this.cratePointGainTimer = Mathf.Sqrt(enemyPoints);
         }
     }
 
