@@ -16,6 +16,7 @@ public class GameData : ScriptableObject
 
     public GameObject playerCharacter;
     public GameObject playerController;
+    public GameObject hud;
 
     public EDirection nextSpawnPointDirection = EDirection.DOWN;
 
@@ -27,6 +28,11 @@ public class GameData : ScriptableObject
         if(this.bIsGameInitialized)
         {
             return;
+        }
+        if(this.hud == null)
+        {
+            hud = Instantiate(script.hudPrefab, new Vector2(0, 0), Quaternion.identity);
+            DontDestroyOnLoad(hud);
         }
         if (playerCharacter == null)
         {
@@ -158,5 +164,7 @@ public class GameData : ScriptableObject
     public void ShutDown()
     {
         instance = null;
+        Object.Destroy(hud);
+        hud = null;
     }
 }
