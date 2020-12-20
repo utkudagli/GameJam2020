@@ -22,6 +22,7 @@ public class CyberMageAi : MonoBehaviour
     public EAiState currentAiState = EAiState.IDLE;
     public Vector2 idleAttackRateMinMax = new Vector2(10, 90);
     public Vector2 moveAttackRateMinMax = new Vector2(10, 90);
+    public AudioSource WalkingSound;
 
     public Transform fireOffset;
 
@@ -265,6 +266,7 @@ public class CyberMageAi : MonoBehaviour
 
     public void OnFootstepAnimNotify()
     {
+        WalkingSound.Play();
     }
 
     public void OnDeathAnimNotify()
