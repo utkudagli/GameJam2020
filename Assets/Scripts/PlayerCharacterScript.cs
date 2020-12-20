@@ -21,6 +21,8 @@ public class PlayerCharacterScript : MonoBehaviour
     private CharacterStats myStats;
     public Animator myAnimator;
     public AudioSource WalkingSound;
+    [SerializeField]
+    private AudioSource deathSound;
     public EPlayerState myPlayerState = EPlayerState.IDLE;
 
     // Start is called before the first frame update
@@ -60,6 +62,8 @@ public class PlayerCharacterScript : MonoBehaviour
 
     private Vector2 lastAttackLocation;
     bool bDidAttackLastFrame = false;
+
+    public AudioSource DeathSound { get => deathSound; set => deathSound = value; }
 
     public void Attack()
     {
@@ -144,6 +148,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     public void OnDeathAnimNotify()
     {
+        deathSound.Play();
 
     }
 }
