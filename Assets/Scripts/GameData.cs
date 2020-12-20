@@ -133,7 +133,7 @@ public class GameData : ScriptableObject
             case EDirection.LEFT: nextSpawnPointDirection = EDirection.RIGHT; break;
             default: nextSpawnPointDirection = EDirection.DOWN; break;
         }
-       // playerCharacter.SetActive(false);
+        playerCharacter.GetComponent<PlayerCharacterScript>().PreRoomChange();
         SceneManager.LoadScene("RandomRoomScene");
     }
 

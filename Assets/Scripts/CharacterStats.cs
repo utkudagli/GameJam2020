@@ -13,6 +13,8 @@ public class CharacterStats : MonoBehaviour
     private float colorAdjuster = 0f;
     public event Action<CharacterStats> OnDeath;
     public event Action<int, int> OnHealthChanged;
+
+    private Color currentAdjustingColor = Color.red;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +30,7 @@ public class CharacterStats : MonoBehaviour
 
         this.colorAdjuster -= Time.deltaTime;
 
-        this.spriteRenderer.color = Color.Lerp(Color.white, Color.red, this.colorAdjuster);
+        this.spriteRenderer.color = Color.Lerp(Color.white, this.currentAdjustingColor, this.colorAdjuster);
         if(this.colorAdjuster < 0)
         {
             this.spriteRenderer.color = Color.white;
@@ -46,6 +48,7 @@ public class CharacterStats : MonoBehaviour
         this.colorAdjuster = 0.5f;
         this.spriteRenderer.color = Color.red;
         this.enabled = true;
+        this.currentAdjustingColor = Color.red;
 
         this.OnHealthChanged?.Invoke(this.health, this.maxHealth);
 
@@ -54,6 +57,24 @@ public class CharacterStats : MonoBehaviour
             this.animator.SetBool("IsAlive", false);
             this.OnDeath?.Invoke(this);
         }
+    }
+
+    public void Heal(int amount)
+    {
+        if (!IsAlive())
+        {
+            return;
+        }
+        this.health += amount;
+        if(this.health > this.maxHealth)
+        {
+            this.health = this.maxHealth;
+        }
+        this.colorAdjuster = 0.5f;
+        this.spriteRenderer.color = Color.green;
+        this.currentAdjustingColor = Color.green;
+        this.enabled = true;
+        this.OnHealthChanged?.Invoke(this.health, this.maxHealth);
     }
 
     public bool IsAlive()

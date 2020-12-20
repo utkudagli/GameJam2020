@@ -151,4 +151,9 @@ public class PlayerCharacterScript : MonoBehaviour
     public void OnDeathAnimNotify()
     {
     }
+
+    public void PreRoomChange()
+    {
+        OnTryInteract = null;
+    }
 }

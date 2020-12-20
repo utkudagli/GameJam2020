@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HealthPotionScript : MonoBehaviour
 {
+    public int HealthRecovered = 3;
     // Start is called before the first frame update
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -27,9 +28,10 @@ public class HealthPotionScript : MonoBehaviour
 
     public void OnPlayerInteract(GameObject obj)
     {
+        CharacterStats stats = obj.GetComponent<CharacterStats>();
+        stats.Heal(this.HealthRecovered);
         PlayerCharacterScript pss = obj.GetComponent<PlayerCharacterScript>();
         pss.OnTryInteract -= OnPlayerInteract;
-
         Object.Destroy(this.gameObject);
     }
 }
