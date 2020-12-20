@@ -20,6 +20,10 @@ public class PlayerCharacterScript : MonoBehaviour
     private Rigidbody2D rb;
     private CharacterStats myStats;
     public Animator myAnimator;
+    public AudioSource WalkingSound;
+    [SerializeField]
+    private AudioSource deathSound;
+    public AudioSource attackSound;
     public EPlayerState myPlayerState = EPlayerState.IDLE;
 
     // Start is called before the first frame update
@@ -60,6 +64,8 @@ public class PlayerCharacterScript : MonoBehaviour
     private Vector2 lastAttackLocation;
     bool bDidAttackLastFrame = false;
 
+    public AudioSource DeathSound { get => deathSound; set => deathSound = value; }
+
     public void Attack()
     {
         Debug.Log("trying to play attacking animation");
@@ -69,6 +75,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     void OnAttackAnimNotify()
     {
+        attackSound.Play();
         if (!this.attackHitboxTransform)
         {
             return;
@@ -137,11 +144,13 @@ public class PlayerCharacterScript : MonoBehaviour
 
     public void OnFootstepAnimNotify()
     {
+        WalkingSound.Play();
 
     }
 
     public void OnDeathAnimNotify()
     {
+        deathSound.Play();
 
     }
 }
