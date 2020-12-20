@@ -18,21 +18,7 @@ public class UI_Assistant : MonoBehaviour
         toContinue = transform.Find("message").Find("toContinue").GetComponent<Text>();
         Application.targetFrameRate = 100;
 
-        string[] messageArr = new string[]
-        {
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            " Donec malesuada, nunc vel venenatis euismod, nibh elit consequat nisi, at tempus nisi libero a velit.",
-            " Vivamus lacinia lacinia massa, id mattis nisi feugiat in. Integer dictum auctor ultricies. Aenean quis est quis nisl ",
-            "feugiat fermentum a a tellus.",
-        };
-        InvokeTextBox(messageArr);
-    }
-    private void Start()
-    {
-        textWriter.AddWriter(messageText, "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
-            " Donec malesuada, nunc vel venenatis euismod, nibh elit consequat nisi, at tempus nisi libero a velit." +
-            " Vivamus lacinia lacinia massa, id mattis nisi feugiat in. Integer dictum auctor ultricies. Aenean quis est quis nisl " +
-            "feugiat fermentum a a tellus.", .025f);
+        
     }
     private void NextMsg(string[] messageArr)
     {
@@ -51,6 +37,13 @@ public class UI_Assistant : MonoBehaviour
                 textWriter.AddWriter(messageText, msg, .025f);
             }
         }
+    }
+    private void setVisible(string[] messageArr) {
+        messageText.gameObject.SetActive(true);
+        messageBackground.gameObject.SetActive(true);
+        toContinue.gameObject.SetActive(true);
+
+        InvokeTextBox(messageArr);
     }
     private void InvokeTextBox(string[] messageArr)
     {

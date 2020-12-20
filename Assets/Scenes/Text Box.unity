@@ -168,7 +168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 595c35eea66310a469e690b76e4498fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messageText: {fileID: 0}
 --- !u!114 &230707855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,10 +642,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada,
-    nunc vel venenatis euismod, nibh elit consequat nisi, at tempus nisi libero a
-    velit. Vivamus lacinia lacinia massa, id mattis nisi feugiat in. Integer dictum
-    auctor ultricies. Aenean quis est quis nisl feugiat fermentum a a tellus.
+  m_Text: 
 --- !u!222 &1508773153
 CanvasRenderer:
   m_ObjectHideFlags: 0
