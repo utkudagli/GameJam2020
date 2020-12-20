@@ -21,7 +21,7 @@ public class GameData : ScriptableObject
     public EDirection nextSpawnPointDirection = EDirection.DOWN;
 
     int roomCounter = 0;
-    int maxRoomCounter = 10;
+    int maxRoomCounter = 15;
     bool bIsGameInitialized = false;
 
     bool bIsLastRoom = false;
