@@ -7,8 +7,10 @@ public class CyberstaffSphereScript : MonoBehaviour
     // Start is called before the first frame update
     public Vector2 direction;
     public float speed;
+    public int damage;
     void Start()
     {
+        this.damage = this.damage > 0 ? this.damage : 1;
         Object.Destroy(this.gameObject, 5);
     }
 
@@ -25,9 +27,10 @@ public class CyberstaffSphereScript : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject obj = collision.gameObject;
-        if(obj.tag == "Player")
+        if(obj.tag == "PlayerCharacter")
         {
-            //TODO : do damage to player
+            CharacterStats stats = obj.GetComponent<CharacterStats>();
+            stats.ReceiveDamage(this.damage);
             Object.Destroy(this.gameObject);
         }
         else if(obj.tag == "Wall")

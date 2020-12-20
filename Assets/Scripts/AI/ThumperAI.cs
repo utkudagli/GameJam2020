@@ -14,6 +14,7 @@ public class ThumperAI : MonoBehaviour
     public EAiState currentAiState = EAiState.IDLE;
     public Vector2 idleAttackRateMinMax = new Vector2(10, 90);
     public Vector2 moveAttackRateMinMax = new Vector2(10, 90);
+    public int damage = 2;
 
     public AudioSource thumpSound;
     public AudioSource moveSound;
@@ -33,6 +34,7 @@ public class ThumperAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.damage = this.damage > 0 ? this.damage : 1;
         movementComponent = GetComponent<CharacterMovement2D>();
         animator = GetComponent<Animator>();
         myCollider = GetComponent<Collider2D>();
@@ -221,7 +223,7 @@ public class ThumperAI : MonoBehaviour
                 Vector2 lookat = (hit.transform.position - new Vector3(mylocation.x, mylocation.y, 0)).normalized;
                 //rb.AddForce(-lookat * rb.mass * 500);
                 hit.collider.attachedRigidbody.AddForce(lookat * this.myCollider.attachedRigidbody.mass * 250);
-                playerStats.ReceiveDamage(2);
+                playerStats.ReceiveDamage(this.damage);
             }
         }
     }
