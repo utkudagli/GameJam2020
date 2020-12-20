@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
 
     private void NewGame()
     {
-        Application.LoadLevel("RandomRoomScene");
+        Application.LoadLevel("StartGameScene");
     }
 
     private void Credits()
