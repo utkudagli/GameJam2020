@@ -16,11 +16,6 @@ public class CyberstaffSphereScript : MonoBehaviour
     {
         this.direction = direction;
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void FixedUpdate()
     {

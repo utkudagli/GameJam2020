@@ -9,7 +9,8 @@ public enum EAiState
     IDLE,
     MOVE,
     PREATTACK,
-    POSTATTACK
+    POSTATTACK,
+    DEAD
 }
 public class CyberMageAi : MonoBehaviour
 {
@@ -41,11 +42,25 @@ public class CyberMageAi : MonoBehaviour
     {
         movementComponent = GetComponent<CharacterMovement2D>();
         animator = GetComponent<Animator>();
+        CharacterStats stats = GetComponent<CharacterStats>();
+        stats.OnDeath += OnDeath;
+    }
+
+    void OnDeath(CharacterStats myStats)
+    {
+        this.currentAiFunction = () => { };
+        this.currentAiState = EAiState.DEAD;
+        myStats.OnDeath -= OnDeath;
+        this.GetComponent<Collider2D>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(this.currentAiState == EAiState.DEAD)
+        {
+            return;
+        }
         timer -= Time.deltaTime;
         if (timer < 0)
         {

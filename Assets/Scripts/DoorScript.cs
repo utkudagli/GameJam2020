@@ -6,17 +6,8 @@ public class DoorScript : MonoBehaviour
     // Start is called before the first frame update
 
     public EDirection doorDirection = EDirection.UP;
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject obj = collision.gameObject;

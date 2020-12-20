@@ -18,15 +18,6 @@ public class PlayerCharacterScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void AddInteractContext(MonoBehaviour other)
-    {
-        
-    }
 
     public void TriggerInteract()
     {
@@ -56,6 +47,11 @@ public class PlayerCharacterScript : MonoBehaviour
                 Vector2 lookat = (hit.transform.position - new Vector3(origin.x, origin.y, 0)).normalized;
                 rb.AddForce(-lookat * rb.mass * 500);
                 hit.collider.attachedRigidbody.AddForce(lookat * rb.mass * 250);
+                CharacterStats enemyStats = hit.collider.gameObject.GetComponent<CharacterStats>();
+                if(enemyStats)
+                {
+                      enemyStats.ReceiveDamage(1);
+                }
             }
 
         }

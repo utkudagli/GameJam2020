@@ -34,11 +34,25 @@ public class ThumperAI : MonoBehaviour
     {
         movementComponent = GetComponent<CharacterMovement2D>();
         animator = GetComponent<Animator>();
+        CharacterStats stats = GetComponent<CharacterStats>();
+        stats.OnDeath += OnDeath;
+    }
+
+    void OnDeath(CharacterStats mystats)
+    {
+        this.currentAiFunction = () => { };
+        this.currentAiState = EAiState.DEAD;
+        mystats.OnDeath -= OnDeath;
+        this.GetComponent<Collider2D>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (this.currentAiState == EAiState.DEAD)
+        {
+            return;
+        }
         timer -= Time.deltaTime;
         if (timer < 0)
         {
