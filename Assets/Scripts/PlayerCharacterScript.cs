@@ -143,6 +143,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     public void OnFootstepAnimNotify()
     {
+        WalkingSound.pitch = UnityEngine.Random.Range(0.8f, 1f);
         WalkingSound.Play();
 
     }
@@ -150,6 +151,5 @@ public class PlayerCharacterScript : MonoBehaviour
     public void OnDeathAnimNotify()
     {
         deathSound.Play();
-
     }
 }
