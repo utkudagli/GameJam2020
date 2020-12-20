@@ -8,6 +8,7 @@ public class LevelScript : MonoBehaviour
     // Start is called before the first frame update
 
     public GameObject playerCharacterPrefab;
+    public GameObject hudPrefab;
     public List<GameObject> doorSpawnPoints;
     public List<GameObject> doorPrefabs;
     public List<GameObject> playerSpawnPoints;
