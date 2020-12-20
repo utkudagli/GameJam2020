@@ -21,8 +21,6 @@ public class PlayerCharacterScript : MonoBehaviour
     private CharacterStats myStats;
     public Animator myAnimator;
     public AudioSource WalkingSound;
-    [SerializeField]
-    private AudioSource deathSound;
     public AudioSource attackSound;
     public EPlayerState myPlayerState = EPlayerState.IDLE;
 
@@ -151,6 +149,5 @@ public class PlayerCharacterScript : MonoBehaviour
 
     public void OnDeathAnimNotify()
     {
-        
     }
 }
