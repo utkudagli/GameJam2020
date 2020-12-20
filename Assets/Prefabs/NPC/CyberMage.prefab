@@ -205,6 +205,7 @@ MonoBehaviour:
   moveAttackRateMinMax: {x: 50, y: 90}
   WalkingSound: {fileID: 6554965949793812515}
   deathSound: {fileID: 197609616149923166}
+  attackSound: {fileID: 3379011934855862835}
   fireOffset: {fileID: 2804947529714638109}
   animator: {fileID: 0}
   cyberstaffSpherePrefab: {fileID: 3497017584973219677, guid: 6a7d80832fca78048b59a2281eb1d0fb,
