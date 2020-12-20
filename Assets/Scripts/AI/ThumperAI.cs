@@ -18,7 +18,7 @@ public class ThumperAI : MonoBehaviour
     public AudioSource thumpSound;
     public AudioSource moveSound;
 
-
+    private Collider2D myCollider;
     public Animator animator;
 
     GameObject player;
@@ -34,6 +34,7 @@ public class ThumperAI : MonoBehaviour
     {
         movementComponent = GetComponent<CharacterMovement2D>();
         animator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider2D>();
         CharacterStats stats = GetComponent<CharacterStats>();
         stats.OnDeath += OnDeath;
     }
@@ -192,11 +193,6 @@ public class ThumperAI : MonoBehaviour
         }
     }
 
-    void AttackEvent()
-    {
-
-    }
-
     public void OnFootstepAnimNotify()
     {
 
@@ -209,6 +205,21 @@ public class ThumperAI : MonoBehaviour
 
     void OnAttackAnimNotify()
     {
-
+        Debug.Log("Thumper attack anim notify");
+        Vector2 mylocation = this.transform.position;
+        float radius = this.myCollider.bounds.extents.x * 2;
+        RaycastHit2D hit = Physics2D.CircleCast(mylocation, radius, Vector2.down, 0.01f, 1 << 9);
+        if (hit.collider)
+        {
+            Debug.Log("Hit something");
+            CharacterStats playerStats = hit.collider.gameObject.GetComponent<CharacterStats>();
+            if (playerStats && playerStats.IsAlive())
+            {
+                Vector2 lookat = (hit.transform.position - new Vector3(mylocation.x, mylocation.y, 0)).normalized;
+                //rb.AddForce(-lookat * rb.mass * 500);
+                hit.collider.attachedRigidbody.AddForce(lookat * this.myCollider.attachedRigidbody.mass * 250);
+                playerStats.ReceiveDamage(2);
+            }
+        }
     }
 }
