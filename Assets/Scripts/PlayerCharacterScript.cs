@@ -20,6 +20,7 @@ public class PlayerCharacterScript : MonoBehaviour
     private Rigidbody2D rb;
     private CharacterStats myStats;
     public Animator myAnimator;
+    public AudioSource WalkingSound;
     public EPlayerState myPlayerState = EPlayerState.IDLE;
 
     // Start is called before the first frame update
@@ -137,6 +138,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     public void OnFootstepAnimNotify()
     {
+        WalkingSound.Play();
 
     }
 
