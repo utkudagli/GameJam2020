@@ -23,6 +23,7 @@ public class PlayerCharacterScript : MonoBehaviour
     public AudioSource WalkingSound;
     [SerializeField]
     private AudioSource deathSound;
+    public AudioSource attackSound;
     public EPlayerState myPlayerState = EPlayerState.IDLE;
 
     // Start is called before the first frame update
@@ -74,6 +75,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     void OnAttackAnimNotify()
     {
+        attackSound.Play();
         if (!this.attackHitboxTransform)
         {
             return;

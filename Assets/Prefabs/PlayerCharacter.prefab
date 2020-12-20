@@ -139,6 +139,7 @@ MonoBehaviour:
   myAnimator: {fileID: -78958837256535747}
   WalkingSound: {fileID: 8242391476439875929}
   deathSound: {fileID: -3458809580418550375}
+  attackSound: {fileID: 6241677481977442990}
   myPlayerState: 0
 --- !u!114 &3726902845487669284
 MonoBehaviour:
@@ -454,8 +455,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 766c44fb30816964eb738e8bc130ce43, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
