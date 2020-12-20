@@ -22,6 +22,7 @@ public class PlayerCharacterScript : MonoBehaviour
     public Animator myAnimator;
     public AudioSource WalkingSound;
     public AudioSource attackSound;
+    public AudioSource deathSound;
     public EPlayerState myPlayerState = EPlayerState.IDLE;
 
     // Start is called before the first frame update
