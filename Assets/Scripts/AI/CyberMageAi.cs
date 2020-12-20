@@ -51,7 +51,7 @@ public class CyberMageAi : MonoBehaviour
         this.currentAiFunction = () => { };
         this.currentAiState = EAiState.DEAD;
         myStats.OnDeath -= OnDeath;
-        this.GetComponent<Collider2D>().enabled = false;
+        //this.GetComponent<Collider2D>().enabled = false;
     }
 
     // Update is called once per frame

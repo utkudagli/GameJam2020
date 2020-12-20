@@ -43,7 +43,7 @@ public class ThumperAI : MonoBehaviour
         this.currentAiFunction = () => { };
         this.currentAiState = EAiState.DEAD;
         mystats.OnDeath -= OnDeath;
-        this.GetComponent<Collider2D>().enabled = false;
+        //this.GetComponent<Collider2D>().enabled = false;
     }
 
     // Update is called once per frame
