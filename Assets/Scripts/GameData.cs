@@ -103,7 +103,7 @@ public class GameData : ScriptableObject
         }
         cratePoints = 0;
 
-        playerCharacter.SetActive(true);
+       // playerCharacter.SetActive(true);
     }
     public static GameData Get()
     {
@@ -125,7 +125,7 @@ public class GameData : ScriptableObject
             case EDirection.LEFT: nextSpawnPointDirection = EDirection.RIGHT; break;
             default: nextSpawnPointDirection = EDirection.DOWN; break;
         }
-        playerCharacter.SetActive(false);
+       // playerCharacter.SetActive(false);
         SceneManager.LoadScene("RandomRoomScene");
     }
 
