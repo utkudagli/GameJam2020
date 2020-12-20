@@ -32,11 +32,7 @@ public class PauseMenu : MonoBehaviour
     }
     private void Exit()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        Application.LoadLevel("MainMenu");
     }
 
     private void Update()
