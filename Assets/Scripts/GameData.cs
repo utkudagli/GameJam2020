@@ -112,7 +112,8 @@ public class GameData : ScriptableObject
         this.pointTimer -= Time.deltaTime;
         if (this.pointTimer < 0)
         {
-            points++;
+            //cap points at 50 for now
+            points = points < 50 ? points + 1 : points;
             this.pointTimer = Mathf.Sqrt(points);
         }
     }
