@@ -38,6 +38,7 @@ public class PlayerCharacterScript : MonoBehaviour
     public void OnDeath(CharacterStats myStats)
     {
         myStats.OnDeath -= OnDeath;
+        deathSound.Play();
         this.myPlayerState = EPlayerState.DEAD;
         this.myAnimator.SetBool("IsAlive", false);
         this.enabled = false;
@@ -150,6 +151,6 @@ public class PlayerCharacterScript : MonoBehaviour
 
     public void OnDeathAnimNotify()
     {
-        deathSound.Play();
+        
     }
 }
